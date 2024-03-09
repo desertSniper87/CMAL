@@ -301,14 +301,14 @@ def train(nb_epoch, batch_size, store_name, resume=False, start_epoch=0, model_p
                 train_loss4 / (idx + 1), train_loss5 / (idx + 1)))
 
         if epoch < 5 or epoch >= 100:
-            val_acc_com, val_loss = test(net, CELoss, 3, data_path+'/test')
+            val_acc_com, val_loss = test(net, CELoss, 3, data_path+'/val')
             if val_acc_com > max_val_acc:
                 max_val_acc = val_acc_com
                 net.cpu()
                 torch.save(net, './' + store_name + '/model.pth')
                 net.to(device)
-            with open(exp_dir + '/results_test.txt', 'a') as file:
-                file.write('Iteration %d, test_acc_combined = %.5f, test_loss = %.6f\n' % (
+            with open(exp_dir + '/results_val.txt', 'a') as file:
+                file.write('Iteration %d, val_acc_combined = %.5f, val_loss = %.6f\n' % (
                 epoch, val_acc_com, val_loss))
         else:
             net.cpu()
